@@ -2,7 +2,10 @@ import logging
 import os
 import sys
 import urllib
-import urlparse
+try:
+    import urlparse
+except ModuleNotFoundError:
+    from urllib import parse as urlparse
 
 import redis
 from flask_mail import Mail

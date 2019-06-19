@@ -2,7 +2,10 @@ import hashlib
 import hmac
 import logging
 import time
-from urlparse import urlsplit, urlunsplit
+try:
+    from urlparse import urlsplit, urlunsplit
+except ModuleNotFoundError:
+    from urllib.parse import urlsplit, urlunsplit
 
 from flask import jsonify, redirect, request, url_for
 from flask_login import LoginManager, login_user, logout_user, user_logged_in
@@ -33,8 +36,8 @@ def sign(key, path, expires):
     if not key:
         return None
 
-    h = hmac.new(str(key), msg=path, digestmod=hashlib.sha1)
-    h.update(str(expires))
+    h = hmac.new(str(key).encode("utf-8"), msg=path.encode("utf-8"), digestmod=hashlib.sha1)
+    h.update(str(expires).encode("utf-8"))
 
     return h.hexdigest()
 

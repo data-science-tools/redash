@@ -88,4 +88,4 @@ class Graphite(BaseQueryRunner):
 
         return data, error
 
-register(Graphite)
+#register(Graphite)

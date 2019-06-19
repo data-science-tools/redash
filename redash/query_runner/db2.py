@@ -147,4 +147,4 @@ class DB2(BaseSQLQueryRunner):
         return json_data, error
 
 
-register(DB2)
+#register(DB2)

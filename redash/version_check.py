@@ -37,7 +37,7 @@ def reset_new_version_status():
 
 
 def get_latest_version():
-    return redis_connection.get(REDIS_KEY)
+    return redis_connection.get(REDIS_KEY).decode("utf-8") if redis_connection.get(REDIS_KEY) else None
 
 
 def _compare_and_update(latest_version):

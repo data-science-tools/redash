@@ -128,7 +128,7 @@ class ClickHouse(BaseSQLQueryRunner):
 
         if 'totals' in result:
             totals = result['totals']
-            for column, value in columns_totals.iteritems():
+            for column, value in columns_totals.items():
                 totals[column] = value
             rows.append(totals)
 
@@ -150,4 +150,4 @@ class ClickHouse(BaseSQLQueryRunner):
             error = unicode(e)
         return data, error
 
-register(ClickHouse)
+#register(ClickHouse)

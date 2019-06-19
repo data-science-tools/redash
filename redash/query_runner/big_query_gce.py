@@ -72,4 +72,4 @@ class BigQueryGCE(BigQuery):
         return build("bigquery", "v2", http=http)
 
 
-register(BigQueryGCE)
+#register(BigQueryGCE)

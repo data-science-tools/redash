@@ -56,7 +56,7 @@ def _collect_query_parameters(query):
 
 def _parameter_names(parameter_values):
     names = []
-    for key, value in parameter_values.iteritems():
+    for key, value in parameter_values.items():
         if isinstance(value, dict):
             for inner_key in value.keys():
                 names.append(u'{}.{}'.format(key, inner_key))
@@ -100,7 +100,7 @@ class ParameterizedQuery(object):
         self.parameters = {}
 
     def apply(self, parameters):
-        invalid_parameter_names = [key for (key, value) in parameters.iteritems() if not self._valid(key, value)]
+        invalid_parameter_names = [key for (key, value) in parameters.items() if not self._valid(key, value)]
         if invalid_parameter_names:
             raise InvalidParameterError(invalid_parameter_names)
         else:
@@ -137,7 +137,7 @@ class ParameterizedQuery(object):
 
     @property
     def is_safe(self):
-        text_parameters = filter(lambda p: p["type"] == "text", self.schema)
+        text_parameters = list(filter(lambda p: p["type"] == "text", self.schema))
         return not any(text_parameters)
 
     @property

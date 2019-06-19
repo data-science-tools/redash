@@ -119,7 +119,7 @@ class DynamoDBSQL(BaseSQLQueryRunner):
 
             for item in result:
                 if not columns:
-                    for k, v in item.iteritems():
+                    for k, v in item.items():
                         columns.append({
                             'name': k,
                             'friendly_name': k,
@@ -146,4 +146,4 @@ class DynamoDBSQL(BaseSQLQueryRunner):
         return json_data, error
 
 
-register(DynamoDBSQL)
+#register(DynamoDBSQL)

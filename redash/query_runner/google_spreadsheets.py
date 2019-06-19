@@ -217,4 +217,4 @@ class GoogleSpreadsheet(BaseQueryRunner):
             return None, parse_api_error(e)
 
 
-register(GoogleSpreadsheet)
+#register(GoogleSpreadsheet)

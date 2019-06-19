@@ -1,6 +1,10 @@
 import logging
 import yaml
-from urlparse import parse_qs, urlparse
+try:
+    from urlparse import parse_qs, urlparse
+except ModuleNotFoundError:
+    from urllib.parse import parse_qs, urlparse
+
 
 import requests
 

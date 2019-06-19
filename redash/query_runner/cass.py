@@ -148,5 +148,5 @@ class ScyllaDB(Cassandra):
         return "scylla"
 
 
-register(Cassandra)
-register(ScyllaDB)
+#register(Cassandra)
+#register(ScyllaDB)

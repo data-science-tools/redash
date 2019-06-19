@@ -49,6 +49,12 @@ class Hive(BaseSQLQueryRunner):
                 "port": {
                     "type": "number"
                 },
+                "auth": {
+                    "type": "string"
+                },
+                "kerberos_service_name": {
+                    "type": "string"
+                },
                 "database": {
                     "type": "string"
                 },
@@ -56,7 +62,7 @@ class Hive(BaseSQLQueryRunner):
                     "type": "string"
                 },
             },
-            "order": ["host", "port", "database", "username"],
+            "order": ["host", "port", "auth","kerberos_service_name","database", "username"],
             "required": ["host"]
         }
 
@@ -81,7 +87,7 @@ class Hive(BaseSQLQueryRunner):
 
         for schema_name in filter(lambda a: len(a) > 0, map(lambda a: str(a['database_name']), self._run_query_internal(schemas_query))):
             for table_name in filter(lambda a: len(a) > 0, map(lambda a: str(a['tab_name']), self._run_query_internal(tables_query % schema_name))):
-                columns = filter(lambda a: len(a) > 0, map(lambda a: str(a['field']), self._run_query_internal(columns_query % (schema_name, table_name))))
+                columns = list(filter(lambda a: len(a) > 0, map(lambda a: str(a['field']), self._run_query_internal(columns_query % (schema_name, table_name)))))
 
                 if schema_name != 'default':
                     table_name = '{}.{}'.format(schema_name, table_name)
@@ -95,17 +101,18 @@ class Hive(BaseSQLQueryRunner):
         connection = hive.connect(
             host=host,
             port=self.configuration.get('port', None),
+            auth=self.configuration.get('auth', None),
+            kerberos_service_name=self.configuration.get('kerberos_service_name', None),
             database=self.configuration.get('database', 'default'),
             username=self.configuration.get('username', None),
         )
-        
-        return connection
 
+        return connection
 
     def run_query(self, query, user):
         connection = None
         try:
-            connection = self._get_connection() 
+            connection = self._get_connection()
             cursor = connection.cursor()
 
             cursor.execute(query)
@@ -214,7 +221,7 @@ class HiveHttp(Hive):
 
         # create connection
         connection = hive.connect(thrift_transport=transport)
-        
+
         return connection
 
 

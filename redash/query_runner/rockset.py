@@ -98,4 +98,4 @@ class Rockset(BaseSQLQueryRunner):
         return data, None
 
 
-register(Rockset)
+#register(Rockset)

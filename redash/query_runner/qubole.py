@@ -2,7 +2,10 @@ from __future__ import absolute_import
 import time
 import requests
 import logging
-from cStringIO import StringIO
+try:
+    from cStringIO import StringIO
+except ModuleNotFoundError:
+    from io import StringIO
 
 from redash.query_runner import BaseQueryRunner, register
 from redash.query_runner import TYPE_STRING
@@ -129,4 +132,4 @@ class Qubole(BaseQueryRunner):
         return {"Content-type": "application/json", "Accept": "application/json",
                 "X-AUTH-TOKEN": self.configuration['token']}
 
-register(Qubole)
+#register(Qubole)

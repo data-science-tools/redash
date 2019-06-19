@@ -1,13 +1,23 @@
 #!/bin/bash
 set -e
 
+export REDASH_BASE_PATH=$PWD
+export PYTHONUNBUFFERED=0
+export REDASH_LOG_LEVEL=INFO
+export REDASH_REDIS_URL=redis://localhost:6379/0
+export POSTGRES_PASSWORD=postgre
+export REDASH_COOKIE_SECRET=false
+export REDASH_SECRET_KEY=c292a0a3aa32397cdb050e233733900f
+export REDASH_DATABASE_URL=postgresql://postgres:123123@localhost/redash
+
+
 worker() {
   WORKERS_COUNT=${WORKERS_COUNT:-2}
   QUEUES=${QUEUES:-queries,scheduled_queries,celery,schemas}
   WORKER_EXTRA_OPTIONS=${WORKER_EXTRA_OPTIONS:-}
 
   echo "Starting $WORKERS_COUNT workers for queues: $QUEUES..."
-  exec /usr/local/bin/celery worker --app=redash.worker -c$WORKERS_COUNT -Q$QUEUES -linfo --max-tasks-per-child=10 -Ofair $WORKER_EXTRA_OPTIONS
+  exec ./env/bin/celery worker --app=redash.worker -c$WORKERS_COUNT -Q$QUEUES -linfo --max-tasks-per-child=10 -Ofair $WORKER_EXTRA_OPTIONS
 }
 
 scheduler() {
@@ -17,19 +27,19 @@ scheduler() {
 
   echo "Starting scheduler and $WORKERS_COUNT workers for queues: $QUEUES..."
 
-  exec /usr/local/bin/celery worker --app=redash.worker --beat -s$SCHEDULE_DB -c$WORKERS_COUNT -Q$QUEUES -linfo --max-tasks-per-child=10 -Ofair
+  exec ./env/bin/celery worker --app=redash.worker --beat -s$SCHEDULE_DB -c$WORKERS_COUNT -Q$QUEUES -linfo --max-tasks-per-child=10 -Ofair
 }
 
 server() {
-  exec /usr/local/bin/gunicorn -b 0.0.0.0:5000 --name redash -w${REDASH_WEB_WORKERS:-4} redash.wsgi:app
+  exec ./env/bin/gunicorn -b 0.0.0.0:8222 --name redash -w${REDASH_WEB_WORKERS:-4} redash.wsgi:app
 }
 
 create_db() {
-  exec /app/manage.py database create-tables
+  exec ./env/bin/python ./manage.py database create-tables
 }
 
 celery_healthcheck() {
-  exec /usr/local/bin/celery inspect ping --app=redash.worker -d celery@$HOSTNAME
+  exec ./env/bin/celery inspect ping --app=redash.worker -d celery@$HOSTNAME
 }
 
 help() {

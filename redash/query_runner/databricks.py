@@ -72,7 +72,7 @@ class Databricks(Hive):
 
         for schema_name in filter(lambda a: len(a) > 0, map(lambda a: str(a['databaseName']), schemas)):
             for table_name in filter(lambda a: len(a) > 0, map(lambda a: str(a['tableName']), self._run_query_internal(tables_query % schema_name))):
-                columns = filter(lambda a: len(a) > 0, map(lambda a: str(a['col_name']), self._run_query_internal(columns_query % (schema_name, table_name))))
+                columns = list(filter(lambda a: len(a) > 0, map(lambda a: str(a['col_name']), self._run_query_internal(columns_query % (schema_name, table_name)))))
 
                 if schema_name != 'default':
                     table_name = '{}.{}'.format(schema_name, table_name)
@@ -81,4 +81,4 @@ class Databricks(Hive):
         return schema.values()
 
 
-register(Databricks)
+#register(Databricks)

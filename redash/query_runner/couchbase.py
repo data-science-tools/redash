@@ -16,10 +16,11 @@ except ImportError as e:
 
 
 TYPES_MAP = {
+    bytes: TYPE_STRING,
     str: TYPE_STRING,
-    unicode: TYPE_STRING,
+    #unicode: TYPE_STRING,
     int: TYPE_INTEGER,
-    long: TYPE_INTEGER,
+    #long: TYPE_INTEGER,
     float: TYPE_FLOAT,
     bool: TYPE_BOOLEAN,
     datetime.datetime: TYPE_DATETIME,
@@ -174,4 +175,4 @@ class Couchbase(BaseQueryRunner):
         return "Couchbase"
 
 
-register(Couchbase)
+#register(Couchbase)

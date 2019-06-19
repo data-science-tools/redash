@@ -53,7 +53,7 @@ def parse_response(data):
         types[col['name']] = col['type']
 
     for row in rows:
-        for key, value in row.iteritems():
+        for key, value in row.items():
             row[key] = convert_type(value, types[key])
 
     return {'columns': columns, 'rows': rows}
@@ -140,4 +140,4 @@ class Drill(BaseHTTPQueryRunner):
         return schema.values()
 
 
-register(Drill)
+#register(Drill)

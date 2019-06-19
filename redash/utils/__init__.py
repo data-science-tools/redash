@@ -1,5 +1,8 @@
 import codecs
-import cStringIO
+try:
+    import cStringIO
+except ModuleNotFoundError:
+    import io as cStringIO
 import csv
 import datetime
 import decimal
@@ -96,7 +99,7 @@ class JSONEncoder(simplejson.JSONEncoder):
             result = o.isoformat()
             if o.microsecond:
                 result = result[:12]
-        elif isinstance(o, buffer):
+        elif isinstance(o, memoryview):
             result = binascii.hexlify(o)
         else:
             result = super(JSONEncoder, self).default(o)
@@ -113,6 +116,7 @@ def json_dumps(data, *args, **kwargs):
     """A custom JSON dumping function which passes all parameters to the
     simplejson.dumps function."""
     kwargs.setdefault('cls', JSONEncoder)
+    #print(data)
     return simplejson.dumps(data, *args, **kwargs)
 
 
@@ -170,7 +174,7 @@ class UnicodeWriter:
 def collect_parameters_from_request(args):
     parameters = {}
 
-    for k, v in args.iteritems():
+    for k, v in args.items():
         if k.startswith('p_'):
             parameters[k[2:]] = v
 

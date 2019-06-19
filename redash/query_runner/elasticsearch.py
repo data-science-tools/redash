@@ -34,11 +34,12 @@ ELASTICSEARCH_BUILTIN_FIELDS_MAPPING = {
 }
 
 PYTHON_TYPES_MAPPING = {
+    bytes: TYPE_STRING,
     str: TYPE_STRING,
-    unicode: TYPE_STRING,
+    #unicode: TYPE_STRING,
     bool: TYPE_BOOLEAN,
     int: TYPE_INTEGER,
-    long: TYPE_INTEGER,
+    #long: TYPE_INTEGER,
     float: TYPE_FLOAT
 }
 
@@ -199,7 +200,7 @@ class BaseElasticSearch(BaseQueryRunner):
 
         def collect_aggregations(mappings, rows, parent_key, data, row, result_columns, result_columns_index):
             if isinstance(data, dict):
-                for key, value in data.iteritems():
+                for key, value in data.items():
                     val = collect_aggregations(mappings, rows, parent_key if key == 'buckets' else key, value, row, result_columns, result_columns_index)
                     if val:
                         row = get_row(rows, row)
@@ -246,7 +247,7 @@ class BaseElasticSearch(BaseQueryRunner):
                 for field in result_fields:
                     add_column_if_needed(mappings, field, field, result_columns, result_columns_index)
 
-            for key, data in raw_result["aggregations"].iteritems():
+            for key, data in raw_result["aggregations"].items():
                 collect_aggregations(mappings, result_rows, key, data, None, result_columns, result_columns_index)
 
             logger.debug("result_rows %s", str(result_rows))

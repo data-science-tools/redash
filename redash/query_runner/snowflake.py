@@ -125,4 +125,4 @@ class Snowflake(BaseQueryRunner):
         return schema.values()
 
 
-register(Snowflake)
+#register(Snowflake)

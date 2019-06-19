@@ -195,4 +195,4 @@ class AxibaseTSD(BaseQueryRunner):
         values = schema.values()
         return values
 
-register(AxibaseTSD)
+#register(AxibaseTSD)

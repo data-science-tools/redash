@@ -47,8 +47,8 @@ class ConfigurationContainer(Mutable):
     def to_json(self):
         return json_dumps(self._config, sort_keys=True)
 
-    def iteritems(self):
-        return self._config.iteritems()
+    def items(self):
+        return self._config.items()
 
     def to_dict(self, mask_secrets=False):
         if mask_secrets is False or 'secret' not in self.schema:
@@ -65,7 +65,7 @@ class ConfigurationContainer(Mutable):
         jsonschema.validate(new_config, self.schema)
 
         config = {}
-        for k, v in new_config.iteritems():
+        for k, v in new_config.items():
             if k in self.schema.get('secret', []) and v == SECRET_PLACEHOLDER:
                 config[k] = self[k]
             else:

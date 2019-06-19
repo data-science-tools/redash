@@ -1,6 +1,10 @@
 import datetime
 import csv
-import cStringIO
+try:
+    import cStringIO
+except ModuleNotFoundError:
+    import io as cStringIO
+
 
 from tests import BaseTestCase
 

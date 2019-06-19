@@ -118,4 +118,4 @@ class Phoenix(BaseQueryRunner):
 
         return json_data, error
 
-register(Phoenix)
+#register(Phoenix)

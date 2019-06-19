@@ -142,4 +142,4 @@ class Presto(BaseQueryRunner):
         return json_data, error
 
 
-register(Presto)
+#register(Presto)

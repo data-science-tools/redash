@@ -37,7 +37,7 @@ class Mysql(BaseSQLQueryRunner):
 
     @classmethod
     def configuration_schema(cls):
-        show_ssl_settings = parse_boolean(os.environ.get('MYSQL_SHOW_SSL_SETTINGS', 'true'))
+        show_ssl_settings = parse_boolean(os.environ.get('MYSQL_SHOW_SSL_SETTINGS', 'false'))
 
         schema = {
             'type': 'object',
@@ -96,7 +96,8 @@ class Mysql(BaseSQLQueryRunner):
     @classmethod
     def enabled(cls):
         try:
-            import MySQLdb
+            #import MySQLdb
+            import pymysql
         except ImportError:
             return False
 
@@ -132,14 +133,14 @@ class Mysql(BaseSQLQueryRunner):
         return schema.values()
 
     def run_query(self, query, user):
-        import MySQLdb
-
+        #import MySQLdb
+        import pymysql
         ev = threading.Event()
         thread_id = ""
         r = Result()
         t = None
         try:
-            connection = MySQLdb.connect(host=self.configuration.get('host', ''),
+            connection = pymysql.connect(host=self.configuration.get('host', ''),
                                          user=self.configuration.get('user', ''),
                                          passwd=self.configuration.get('passwd', ''),
                                          db=self.configuration['db'],
@@ -163,7 +164,8 @@ class Mysql(BaseSQLQueryRunner):
         return r.json_data, r.error
 
     def _run_query(self, query, user, connection, r, ev):
-        import MySQLdb
+        #import MySQLdb
+        import pymysql
 
         try:
             cursor = connection.cursor()
@@ -191,7 +193,7 @@ class Mysql(BaseSQLQueryRunner):
                 r.error = "No data was returned."
 
             cursor.close()
-        except MySQLdb.Error as e:
+        except pymysql.err.MySQLError as e:
             if cursor:
                 cursor.close()
             r.json_data = None
@@ -216,13 +218,14 @@ class Mysql(BaseSQLQueryRunner):
         return ssl_params
 
     def _cancel(self, thread_id):
-        import MySQLdb
+        #import MySQLdb
+        import pymysql
         connection = None
         cursor = None
         error = None
 
         try:
-            connection = MySQLdb.connect(host=self.configuration.get('host', ''),
+            connection = pymysql.connect(host=self.configuration.get('host', ''),
                                          user=self.configuration.get('user', ''),
                                          passwd=self.configuration.get('passwd', ''),
                                          db=self.configuration['db'],
@@ -234,7 +237,7 @@ class Mysql(BaseSQLQueryRunner):
             query = "KILL %d" % (thread_id)
             logging.debug(query)
             cursor.execute(query)
-        except MySQLdb.Error as e:
+        except pymysql.err.MySQLError as e:
             if cursor:
                 cursor.close()
             error = e.args[1]
@@ -296,4 +299,4 @@ class RDSMySQL(Mysql):
 
 
 register(Mysql)
-register(RDSMySQL)
+#register(RDSMySQL)

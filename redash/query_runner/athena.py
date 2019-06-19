@@ -217,4 +217,4 @@ class Athena(BaseQueryRunner):
         return json_data, error
 
 
-register(Athena)
+#register(Athena)

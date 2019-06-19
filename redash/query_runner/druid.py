@@ -94,4 +94,4 @@ class Druid(BaseQueryRunner):
         return schema.values()
 
 
-register(Druid)
+#register(Druid)

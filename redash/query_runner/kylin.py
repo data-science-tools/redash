@@ -142,4 +142,4 @@ class Kylin(BaseQueryRunner):
         return {"name": name, "columns": columns}
 
 
-register(Kylin)
+#register(Kylin)

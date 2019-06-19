@@ -81,6 +81,8 @@ class DataSource(BelongsToOrgMixin, db.Model):
     __tablename__ = 'data_sources'
     __table_args__ = (db.Index('data_sources_org_id_name', 'org_id', 'name'),)
 
+    def __hash__(self):
+        return hash(self.name)
     def __eq__(self, other):
         return self.id == other.id
 
@@ -114,6 +116,10 @@ class DataSource(BelongsToOrgMixin, db.Model):
 
     @classmethod
     def create_with_group(cls, *args, **kwargs):
+        print("#############")
+        print(args)
+        print(kwargs)
+        print("#############")
         data_source = cls(*args, **kwargs)
         data_source_group = DataSourceGroup(
             data_source=data_source,
@@ -156,7 +162,7 @@ class DataSource(BelongsToOrgMixin, db.Model):
 
             redis_connection.set(self._schema_key, json_dumps(schema))
         else:
-            schema = json_loads(cache)
+            schema = json_loads(cache.decode("utf-8"))
 
         return schema
 
@@ -174,7 +180,7 @@ class DataSource(BelongsToOrgMixin, db.Model):
 
     @property
     def pause_reason(self):
-        return redis_connection.get(self._pause_key)
+        return redis_connection.get(self._pause_key).decode("utf-8") if redis_connection.get(self._pause_key) else None
 
     def pause(self, reason=None):
         redis_connection.set(self._pause_key, reason or '')
@@ -531,13 +537,13 @@ class Query(ChangeTrackingMixin, TimestampMixin, BelongsToOrgMixin, db.Model):
             .filter(Query.schedule.isnot(None))
             .order_by(Query.id)
         )
-        return filter(
+        return list(filter(
                 lambda x:
                 x.schedule["until"] is not None and pytz.utc.localize(
                     datetime.datetime.strptime(x.schedule['until'], '%Y-%m-%d')
                 ) <= now,
                 queries
-                )
+                ))
 
     @classmethod
     def outdated_queries(cls):

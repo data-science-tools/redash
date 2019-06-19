@@ -1,0 +1,8 @@
+influxdb
+PyMySQL
+pyhive
+requests
+certifi
+ipython
+thrift
+thrift_sasl

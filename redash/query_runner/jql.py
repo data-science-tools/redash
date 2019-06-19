@@ -31,7 +31,7 @@ def parse_issue(issue, field_mapping):
     result = OrderedDict()
     result['key'] = issue['key']
 
-    for k, v in issue['fields'].iteritems():#
+    for k, v in issue['fields'].items():#
         output_name = field_mapping.get_output_field_name(k)
         member_names = field_mapping.get_dict_members(k)
 
@@ -101,7 +101,7 @@ class FieldMapping:
 
     def __init__(cls, query_field_mapping):
         cls.mapping = []
-        for k, v in query_field_mapping.iteritems():
+        for k, v in query_field_mapping.items():
             field_name = k
             member_name = None
 
@@ -199,4 +199,4 @@ class JiraJQL(BaseHTTPQueryRunner):
         except KeyboardInterrupt:
             return None, "Query cancelled by user."
 
-register(JiraJQL)
+#register(JiraJQL)

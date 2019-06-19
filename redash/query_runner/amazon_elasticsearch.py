@@ -66,4 +66,4 @@ class AmazonElasticsearchService(ElasticSearch):
         self.auth = AWSV4Sign(cred, region, 'es')
 
 
-register(AmazonElasticsearchService)
+#register(AmazonElasticsearchService)

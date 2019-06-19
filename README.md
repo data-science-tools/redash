@@ -46,3 +46,57 @@ Please email security@redash.io to report any security vulnerabilities. We will 
 ## License
 
 BSD-2-Clause.
+
+# python3版本Fork
+
+这个版本只是修改了其后天,从python2.7迁移到了python3,依赖在:
+
++ requirements-run.txt 运行需要的依赖
++ requirements-else.txt hive,mysql,influxdb,elasticsearch相关的依赖
+
+## 外部依赖
+
+需要pg 10以上和redis,默认的数据库连接为:postgresql://postgres:123123@localhost/redash和redis://localhost:6379/0
+
+## 前端部分编译
+
++ npm install
++ npm run build
+
+结果会在client/dist中
+
+## 后端部分
+
++ 使用虚拟环境
+
+```
+python -m venv env
+
+env/bin/python -m pip install requirements-run.txt
+env/bin/python -m pip install requirements-else.txt
+```
+
++ 初始化数据库
+```
+env/bin/python manage.py database create-tables
+```
+
++ 启动worker和scheduler
+
+```
+bash entrypoint worker
+bash entrypoint scheduler
+```
++ 测试环境使用manage.py启动服务
+
+```
+env/bin/python manage.py run
+```
+在端口5000启动
+
++ 正式启动
+
+```
+bash entrypoint server
+```
+在端口8222启动

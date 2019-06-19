@@ -168,4 +168,4 @@ class SqlServer(BaseSQLQueryRunner):
 
         return json_data, error
 
-register(SqlServer)
+#register(SqlServer)
