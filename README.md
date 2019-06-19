@@ -72,8 +72,8 @@ BSD-2-Clause.
 ```
 python -m venv env
 
-env/bin/python -m pip install requirements-run.txt
-env/bin/python -m pip install requirements-else.txt
+env/bin/python -m pip install -r requirements-run.txt
+env/bin/python -m pip install -r requirements-else.txt
 ```
 
 + 初始化数据库
