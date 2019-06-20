@@ -287,7 +287,7 @@ def guess_type(string_value):
     except (ValueError, OverflowError):
         pass
 
-    if unicode(string_value).lower() in ('true', 'false'):
+    if str(string_value).lower() in ('true', 'false'):
         return TYPE_BOOLEAN
 
     try:

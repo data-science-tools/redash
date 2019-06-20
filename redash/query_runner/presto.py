@@ -135,9 +135,9 @@ class Presto(BaseQueryRunner):
             json_data = None
         except Exception as ex:
             json_data = None
-            error = ex.message
-            if not isinstance(error, basestring):
-                error = unicode(error)
+            error = str(ex)
+            if not isinstance(error, str):
+                error = error
 
         return json_data, error
 

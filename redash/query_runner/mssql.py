@@ -129,7 +129,7 @@ class SqlServer(BaseSQLQueryRunner):
 
             connection = pymssql.connect(server=server, user=user, password=password, database=db, tds_version=tds_version, charset=charset)
 
-            if isinstance(query, unicode):
+            if isinstance(query, str):
                 query = query.encode(charset)
 
             cursor = connection.cursor()

@@ -126,7 +126,7 @@ class Oracle(BaseSQLQueryRunner):
             return cursor.var(cx_Oracle.LONG_STRING, 80000, cursor.arraysize)
 
         if default_type in (cx_Oracle.STRING, cx_Oracle.FIXED_CHAR):
-            return cursor.var(unicode, length, cursor.arraysize)
+            return cursor.var(str, length, cursor.arraysize)
 
         if default_type == cx_Oracle.NUMBER:
             if scale <= 0:

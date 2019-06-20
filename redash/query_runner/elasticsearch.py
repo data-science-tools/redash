@@ -346,7 +346,7 @@ class Kibana(BaseElasticSearch):
 
             result_columns = []
             result_rows = []
-            if isinstance(query_data, str) or isinstance(query_data, unicode):
+            if isinstance(query_data, str) or isinstance(query_data, str):
                 _from = 0
                 while True:
                     query_size = size if limit >= (_from + size) else (limit - _from)

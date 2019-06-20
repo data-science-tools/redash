@@ -57,7 +57,7 @@ def parse_oids(oids):
 
 def datetime_parser(dct):
     for k, v in dct.items():
-        if isinstance(v, basestring):
+        if isinstance(v, str):
             m = date_regex.findall(v)
             if len(m) > 0:
                 dct[k] = parse(m[0], yearfirst=True)

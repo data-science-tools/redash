@@ -26,12 +26,12 @@ def convert_type(string_value, actual_type):
         return float(string_value)
 
     if actual_type == TYPE_BOOLEAN:
-        return unicode(string_value).lower() == 'true'
+        return str(string_value).lower() == 'true'
 
     if actual_type == TYPE_DATETIME:
         return parser.parse(string_value)
 
-    return unicode(string_value)
+    return str(string_value)
 
 
 # Parse Drill API response and translate it to accepted format

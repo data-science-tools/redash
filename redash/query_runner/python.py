@@ -40,7 +40,7 @@ class Python(BaseQueryRunner):
         'sorted', 'reversed', 'map', 'reduce', 'any', 'all',
         'slice', 'filter', 'len', 'next', 'enumerate',
         'sum', 'abs', 'min', 'max', 'round', 'cmp', 'divmod',
-        'str', 'unicode', 'int', 'float', 'complex',
+        'str', 'bytes', 'int', 'float', 'complex',
         'tuple', 'set', 'list', 'dict', 'bool',
     )
 

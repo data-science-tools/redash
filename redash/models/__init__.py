@@ -83,6 +83,7 @@ class DataSource(BelongsToOrgMixin, db.Model):
 
     def __hash__(self):
         return hash(self.name)
+
     def __eq__(self, other):
         return self.id == other.id
 
@@ -538,12 +539,12 @@ class Query(ChangeTrackingMixin, TimestampMixin, BelongsToOrgMixin, db.Model):
             .order_by(Query.id)
         )
         return list(filter(
-                lambda x:
-                x.schedule["until"] is not None and pytz.utc.localize(
+            lambda x:
+            x.schedule["until"] is not None and pytz.utc.localize(
                     datetime.datetime.strptime(x.schedule['until'], '%Y-%m-%d')
-                ) <= now,
-                queries
-                ))
+                    ) <= now,
+            queries
+        ))
 
     @classmethod
     def outdated_queries(cls):
@@ -725,7 +726,18 @@ class Favorite(TimestampMixin, db.Model):
             return []
 
         object_type = text_type(objects[0].__class__.__name__)
-        return map(lambda fav: fav.object_id, cls.query.filter(cls.object_id.in_(map(lambda o: o.id, objects)), cls.object_type == object_type, cls.user_id == user))
+        return list(
+            map(
+                lambda fav: fav.object_id,
+                cls.query.filter(
+                    cls.object_id.in_(
+                        map(lambda o: o.id, objects)
+                    ),
+                    cls.object_type == object_type,
+                    cls.user_id == user
+                )
+            )
+        )
 
 
 @generic_repr('id', 'name', 'query_id', 'user_id', 'state', 'last_triggered_at', 'rearm')

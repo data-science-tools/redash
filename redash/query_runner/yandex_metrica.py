@@ -139,7 +139,7 @@ class YandexMetrica(BaseSQLQueryRunner):
             params = yaml.safe_load(query)
         except ValueError as e:
             logging.exception(e)
-            error = unicode(e)
+            error = str(e)
             return data, error
 
         if isinstance(params, dict):
@@ -154,7 +154,7 @@ class YandexMetrica(BaseSQLQueryRunner):
             error = None
         except Exception as e:
             logging.exception(e)
-            error = unicode(e)
+            error = str(e)
         return data, error
 
 

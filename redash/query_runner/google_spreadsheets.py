@@ -56,7 +56,7 @@ def _value_eval_list(row_values, col_types):
             if rval is None or rval == '':
                 val = None
             elif typ == TYPE_BOOLEAN:
-                val = True if unicode(rval).lower() == 'true' else False
+                val = True if str(rval).lower() == 'true' else False
             elif typ == TYPE_DATETIME:
                 val = parser.parse(rval)
             elif typ == TYPE_FLOAT:
@@ -65,7 +65,7 @@ def _value_eval_list(row_values, col_types):
                 val = int(rval)
             else:
                 # for TYPE_STRING and default
-                val = unicode(rval)
+                val = str(rval)
             value_list.append(val)
         except (ValueError, OverflowError):
             value_list.append(rval)

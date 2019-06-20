@@ -13,7 +13,7 @@ def _pluck_name_and_value(default_column, row):
     name_column = "name" if "name" in row.keys() else default_column.lower()
     value_column = "value" if "value" in row.keys() else default_column.lower()
 
-    return {"name": row[name_column], "value": unicode(row[value_column])}
+    return {"name": row[name_column], "value": row[value_column]}
 
 
 def _load_result(query_id):
@@ -33,7 +33,7 @@ def dropdown_values(query_id):
     data = _load_result(query_id)
     first_column = data["columns"][0]["name"]
     pluck = partial(_pluck_name_and_value, first_column)
-    return map(pluck, data["rows"])
+    return list(map(pluck, data["rows"]))
 
 
 def _collect_key_names(nodes):
@@ -119,10 +119,10 @@ class ParameterizedQuery(object):
             return False
 
         validators = {
-            "text": lambda value: isinstance(value, basestring),
+            "text": lambda value: isinstance(value, str),
             "number": _is_number,
             "enum": lambda value: value in definition["enumOptions"],
-            "query": lambda value: unicode(value) in [v["value"] for v in dropdown_values(definition["queryId"])],
+            "query": lambda value: value in [v["value"] for v in dropdown_values(definition["queryId"])],
             "date": _is_date,
             "datetime-local": _is_date,
             "datetime-with-seconds": _is_date,

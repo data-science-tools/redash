@@ -111,7 +111,7 @@ class Phoenix(BaseQueryRunner):
             json_data = None
         except Exception as ex:
             json_data = None
-            error = unicode(ex)
+            error = str(ex)
         finally:
             if connection:
                 connection.close()
