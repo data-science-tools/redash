@@ -85,7 +85,7 @@ class Phoenix(BaseQueryRunner):
 
             schema[table_name]['columns'].append(row['COLUMN_NAME'])
 
-        return schema.values()
+        return list(schema.values())
 
     def run_query(self, query, user):
         connection = phoenixdb.connect(

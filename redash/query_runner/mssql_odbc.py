@@ -100,7 +100,7 @@ class SQLServerODBC(BaseSQLQueryRunner):
 
             schema[table_name]['columns'].append(row['column_name'])
 
-        return schema.values()
+        return list(schema.values())
 
     def run_query(self, query, user):
         connection = None

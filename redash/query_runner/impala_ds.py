@@ -88,7 +88,7 @@ class Impala(BaseSQLQueryRunner):
 
                 schema_dict[table_name] = {'name': table_name, 'columns': columns}
 
-        return schema_dict.values()
+        return list(schema_dict.values())
 
     def run_query(self, query, user):
 

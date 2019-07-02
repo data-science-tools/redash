@@ -112,7 +112,7 @@ class YandexMetrica(BaseSQLQueryRunner):
 
             schema[owner]['columns'].append(counter)
 
-        return schema.values()
+        return list(schema.values())
 
     def test_connection(self):
         self._send_query('management/v1/{0}'.format(self.list_path))

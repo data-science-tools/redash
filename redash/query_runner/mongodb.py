@@ -219,7 +219,7 @@ class MongoDB(BaseQueryRunner):
             schema[collection_name] = {
                 "name": collection_name, "columns": sorted(columns)}
 
-        return schema.values()
+        return list(schema.values())
 
 
     def run_query(self, query, user):

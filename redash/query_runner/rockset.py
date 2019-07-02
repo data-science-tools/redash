@@ -81,7 +81,7 @@ class Rockset(BaseSQLQueryRunner):
             describe = self.api.query('DESCRIBE "{}"'.format(table_name))
             columns = list(set(map(lambda x: x['field'][0], describe['results'])))
             schema[table_name] = {'name': table_name, 'columns': columns}
-        return schema.values()
+        return list(schema.values())
 
     def run_query(self, query, user):
         results = self.api.query(query)

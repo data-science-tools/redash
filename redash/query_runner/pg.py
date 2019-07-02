@@ -165,7 +165,7 @@ class PostgreSQL(BaseSQLQueryRunner):
 
         self._get_definitions(schema, query)
 
-        return schema.values()
+        return list(schema.values())
 
     def _get_connection(self):
         connection = psycopg2.connect(user=self.configuration.get('user'),
@@ -296,7 +296,7 @@ class Redshift(PostgreSQL):
 
         self._get_definitions(schema, query)
 
-        return schema.values()
+        return list(schema.values())
 
 
 class CockroachDB(PostgreSQL):

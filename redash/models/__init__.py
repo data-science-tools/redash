@@ -581,7 +581,7 @@ class Query(ChangeTrackingMixin, TimestampMixin, BelongsToOrgMixin, db.Model):
                 key = "{}:{}".format(query.query_hash, query.data_source_id)
                 outdated_queries[key] = query
 
-        return outdated_queries.values()
+        return list(outdated_queries.values())
 
     @classmethod
     def search(cls, term, group_ids, user_id=None, include_drafts=False,

@@ -126,7 +126,7 @@ class Qubole(BaseQueryRunner):
         except Exception as e:
             logging.error("Failed to get schema information from Qubole. Error {}".format(str(e)))
 
-        return schemas.values()
+        return list(schemas.values())
 
     def _get_header(self):
         return {"Content-type": "application/json", "Accept": "application/json",

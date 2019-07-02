@@ -91,7 +91,7 @@ class MemSQL(BaseSQLQueryRunner):
                                                            self._run_query_internal(columns_query % table_name))))
 
                 schema[table_name] = {'name': table_name, 'columns': columns}
-        return schema.values()
+        return list(schema.values())
 
     def run_query(self, query, user):
 

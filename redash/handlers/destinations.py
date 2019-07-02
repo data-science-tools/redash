@@ -86,7 +86,7 @@ class DestinationListResource(BaseResource):
             'object_type': 'destination',
         })
 
-        return response.values()
+        return list(response.values())
 
     @require_admin
     def post(self):

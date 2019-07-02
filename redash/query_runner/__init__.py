@@ -134,7 +134,7 @@ class BaseSQLQueryRunner(BaseQueryRunner):
         self._get_tables(schema_dict)
         if settings.SCHEMA_RUN_TABLE_SIZE_CALCULATIONS and get_stats:
             self._get_tables_stats(schema_dict)
-        return schema_dict.values()
+        return list(schema_dict.values())
 
     def _get_tables(self, schema_dict):
         return []

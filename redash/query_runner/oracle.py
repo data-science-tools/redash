@@ -111,7 +111,7 @@ class Oracle(BaseSQLQueryRunner):
 
             schema[table_name]['columns'].append(row['COLUMN_NAME'])
 
-        return schema.values()
+        return list(schema.values())
 
     @classmethod
     def _convert_number(cls, value):

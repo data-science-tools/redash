@@ -89,7 +89,7 @@ class TreasureData(BaseQueryRunner):
                             }
             except Exception as ex:
                 raise Exception("Failed getting schema")
-        return schema.values()
+        return list(schema.values())
 
     def run_query(self, query, user):
         connection = tdclient.connect(

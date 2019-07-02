@@ -136,7 +136,7 @@ class GoogleAnalytics(BaseSQLQueryRunner):
                             u'{0} (ga:{1})'.format(property_['name'], property_['defaultProfileId'])
                         )
 
-        return schema.values()
+        return list(schema.values())
 
     def test_connection(self):
         try:

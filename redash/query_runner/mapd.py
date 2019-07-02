@@ -102,7 +102,7 @@ class Mapd(BaseSQLQueryRunner):
         finally:
             connection.close
 
-        return schema.values()
+        return list(schema.values())
 
     def test_connection(self):
         connection = self.connect_database()

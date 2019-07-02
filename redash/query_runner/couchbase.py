@@ -125,7 +125,7 @@ class Couchbase(BaseQueryRunner):
             table_name = row.get(name_param)
             schema[table_name] = {'name': table_name, 'columns': defaultColumns}
 
-        return schema.values()
+        return list(schema.values())
 
     def get_schema(self, get_stats=False):
 

@@ -100,7 +100,7 @@ class Prometheus(BaseQueryRunner):
         schema = {}
         for name in data:
             schema[name] = {'name': name, 'columns': []}
-        return schema.values()
+        return list(schema.values())
 
     def run_query(self, query, user):
         """

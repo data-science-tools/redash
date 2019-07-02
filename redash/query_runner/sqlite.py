@@ -57,7 +57,7 @@ class Sqlite(BaseSQLQueryRunner):
             for row_column in results_table['rows']:
                 schema[table_name]['columns'].append(row_column['name'])
 
-        return schema.values()
+        return list(schema.values())
 
     def run_query(self, query, user):
         connection = sqlite3.connect(self._dbpath)

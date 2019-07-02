@@ -102,7 +102,7 @@ class Cassandra(BaseQueryRunner):
                 schema[table_name] = {'name': table_name, 'columns': []}
             schema[table_name]['columns'].append(column_name)
 
-        return schema.values()
+        return list(schema.values())
 
     def run_query(self, query, user):
         connection = None

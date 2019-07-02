@@ -173,7 +173,7 @@ class BaseElasticSearch(BaseQueryRunner):
                 # remove duplicates
                 # sort alphabetically
                 schema[name]['columns'] = sorted(set(columns))
-        return schema.values()
+        return list(schema.values())
 
     def _parse_results(self, mappings, result_fields, raw_result, result_columns, result_rows):
         def add_column_if_needed(mappings, column_name, friendly_name, result_columns, result_columns_index):

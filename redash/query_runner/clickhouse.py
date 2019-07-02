@@ -64,7 +64,7 @@ class ClickHouse(BaseSQLQueryRunner):
 
             schema[table_name]['columns'].append(row['name'])
 
-        return schema.values()
+        return list(schema.values())
 
     def _send_query(self, data, stream=False):
         r = requests.post(

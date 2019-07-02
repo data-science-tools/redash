@@ -105,7 +105,7 @@ class DB2(BaseSQLQueryRunner):
         """
         self._get_definitions(schema, query)
 
-        return schema.values()
+        return list(schema.values())
 
     def _get_connection(self):
         self.connection_string = "DATABASE={};HOSTNAME={};PORT={};PROTOCOL=TCPIP;UID={};PWD={};".format(

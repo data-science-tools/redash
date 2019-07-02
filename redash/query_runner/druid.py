@@ -91,7 +91,7 @@ class Druid(BaseQueryRunner):
 
             schema[table_name]['columns'].append(row['COLUMN_NAME'])
 
-        return schema.values()
+        return list(schema.values())
 
 
 #register(Druid)
