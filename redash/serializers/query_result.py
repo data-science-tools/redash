@@ -68,13 +68,14 @@ def serialize_query_result_to_csv(query_result):
     query_data = json_loads(query_result.data)
 
     fieldnames, special_columns = _get_column_lists(query_data['columns'])
-
+    fieldnames = fieldnames.encode('utf-8')
     writer = csv.DictWriter(s, extrasaction="ignore", fieldnames=fieldnames)
-    writer.writer = UnicodeWriter(s)
+    #writer.writer = UnicodeWriter(s)
     writer.writeheader()
 
-    for row in query_data['rows']:
+    for row in query_data['rows']:  
         for col_name, converter in special_columns.items():
+            col_name = col_name.encode('utf-8')
             if col_name in row:
                 row[col_name] = converter(row[col_name])
 
@@ -84,7 +85,7 @@ def serialize_query_result_to_csv(query_result):
 
 
 def serialize_query_result_to_xlsx(query_result):
-    s = cStringIO.StringIO()
+    s = cStringIO.BytesIO()
 
     query_data = json_loads(query_result.data)
     book = xlsxwriter.Workbook(s, {'constant_memory': True})

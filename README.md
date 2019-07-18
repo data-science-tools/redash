@@ -100,3 +100,9 @@ env/bin/python manage.py run
 bash entrypoint server
 ```
 在端口8222启动
+
+
+## 已知的bug
+
++ celery[有一处bug](https://github.com/celery/celery/pull/5500/files)会引起无法识别错误,可以按这个pr来修改
++ csv/excel文件下载默认文件名是bytes的字符串
