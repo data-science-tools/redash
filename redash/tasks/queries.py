@@ -59,7 +59,8 @@ class QueryTask(object):
             error = "Query exceeded Redash query execution time limit."
             status = 4
         elif isinstance(result, Exception):
-            error = result.message
+            #error = result.message
+            error = str(result)
             status = 4
         elif task_status == 'REVOKED':
             error = 'Query execution cancelled.'

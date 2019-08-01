@@ -15,7 +15,7 @@ from redash.monitor import celery_tasks
 @require_super_admin
 @login_required
 def outdated_queries():
-    manager_status = redis_connection.hgetall('redash:status')
+    manager_status = {k.decode("utf-8"):v.decode("utf-8") for k,v in redis_connection.hgetall('redash:status').items()}
     query_ids = json_loads(manager_status.get('query_ids', '[]'))
     if query_ids:
         outdated_queries = (
