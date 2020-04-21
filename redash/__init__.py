@@ -58,7 +58,7 @@ def create_redis_connection():
         else:
             redis_db = 0
         # Redis passwords might be quoted with special characters
-        redis_password = redis_url.password and urllib.unquote(redis_url.password)
+        redis_password = redis_url.password and urllib.parse.unquote(redis_url.password)
         client = redis.StrictRedis(
             host=redis_url.hostname, port=redis_url.port, db=redis_db, password=redis_password,
             ssl=use_ssl)
